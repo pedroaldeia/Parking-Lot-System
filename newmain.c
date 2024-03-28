@@ -8,18 +8,20 @@
 #include "parque.h"
 #include "entrada_e_saida.h"
 #include "remove.h"
-
+#include "hash.h"
 
 #define PRKMAX 20
 #define BUFSIZ 8192
 #define IN 0
 #define OUT 1
 
+
 int main () {
     Parque * vec_parques[PRKMAX] = {NULL}; // inicializar o vetor de parques //
     char  * linha = lineinput(); // recebe o primeiro input //
     int n_args = 0;
     char ** palavras;
+    Hash_list * hashtable = cria_hash(); // cria a hashtable //
 
     Data * data_actual = malloc(sizeof(Data)); // aloca espaço para a data atual //
     Horas * hora_actual = malloc(sizeof(Horas));
@@ -44,13 +46,13 @@ int main () {
                 break;
             case 'e':
                 palavras = wordArray(linha);
-                e(vec_parques, hora_actual, data_actual, palavras);
+                e(vec_parques, hora_actual, data_actual, palavras, hashtable);
                 n_args = 5;
                 free_input(palavras, n_args);
                 break;
             case 's':
                 palavras = wordArray(linha);
-                s(vec_parques, hora_actual, data_actual, palavras);
+                s(vec_parques, hora_actual, data_actual, palavras, hashtable);
                 n_args = 5;
                 free_input(palavras, n_args);
                 break;

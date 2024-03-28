@@ -7,6 +7,7 @@
 #include "parque.h"
 #include "datas.h"
 #include "nodes.h"
+#include "hash.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -121,7 +122,7 @@ Carro * procura_carro_fora(Parque * parque, Matricula matricula1) {
     return carro; // se não encontrar, devolve NULL //
 }
 
-int entrada(Matricula matricula, Data data, Horas hora, Parque * parque) {
+int entrada(Matricula matricula, Data data, Horas hora, Parque * parque, Hash_list * hashtable) {
     Carro * carro;
     carro = (Carro*) malloc(sizeof(Carro)); // aloca memoria para um carro //
 
@@ -142,14 +143,12 @@ int entrada(Matricula matricula, Data data, Horas hora, Parque * parque) {
     if(parque->head_cd == NULL) // se a cabeça da lista de carros dentro do parque for NULL //
             parque->head_cd = parque->carros_dentro; // adiciona a primeira cabeça //
 
+    put_hashtable(hashtable, carro, parque); // adiciona o carro à hashtable //
+
     return 0;
 } 
 
-int saida(node * node_carro, Data data, Horas hora, Parque * parque) {
-    Carro * carro;
-
-    carro = node_carro->carro; // vai buscar o ponteiro para o carro com a matricula dada //
-
+int saida(Carro * carro, Data data, Horas hora, Parque * parque) {
     carro->D_saida.ano = data.ano; // põe os valores de data e hora de saida na estrutura carro //
     carro->D_saida.mes = data.mes;
     carro->D_saida.dia = data.dia;
@@ -166,7 +165,7 @@ int saida(node * node_carro, Data data, Horas hora, Parque * parque) {
     return 0;
 }
 
-void e(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palavras) {
+void e(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palavras, Hash_list * hashtable) {
     Data data;
     Horas hora;
     Matricula matricula;
@@ -203,12 +202,12 @@ void e(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
         return;
     }
 
-    if(carro_dentro(parques, matricula) == TRUE){
+    if(hash_carro_dentro(hashtable, matricula) == TRUE){
         printf("%s-%s-%s: invalid vehicle entry.\n", matricula.par1, matricula.par2, matricula.par3);
         return;
     }
 
-    entrada(matricula, data, hora, parque);
+    entrada(matricula, data, hora, parque, hashtable);
 
     data_actual->dia = data.dia;
     data_actual->mes = data.mes;
@@ -219,12 +218,12 @@ void e(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
     printf("%s %d\n", parque->nome, parque->lugares_disponiveis);
 }
 
-void s(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palavras) {
+void s(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palavras, Hash_list * hashtable) {
     Data data;
     Horas hora;
     Matricula matricula;
     Parque * parque = vec_parque(parques, palavras[1]);
-    node * node_carro;
+    Carro * carro;
 
     if (parque == NULL){
         printf("%s: no such parking.\n", palavras[1]);
@@ -251,14 +250,14 @@ void s(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
         return;
     }
 
-    node_carro = procura_carro_dentro(parque, matricula);
+    carro = hash_procura_carro_1parque(hashtable, matricula, parque);
 
-    if(node_carro == NULL){
+    if(carro == NULL){
         printf("%s-%s-%s: invalid vehicle exit.\n", matricula.par1, matricula.par2, matricula.par3);
         return;
     }
 
-    saida(node_carro, data, hora, parque);
+    saida(carro, data, hora, parque);
 
     data_actual->dia = data.dia;
     data_actual->mes = data.mes;
@@ -267,8 +266,8 @@ void s(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
     hora_actual->minuto = hora.minuto;
 
     printf("%s-%s-%s ", matricula.par1, matricula.par2, matricula.par3);
-    print_data_hora(node_carro->carro->D_entrada, node_carro->carro->H_entrada);
+    print_data_hora(carro->D_entrada, carro->H_entrada);
     printf(" ");
     print_data_hora(data, hora);
-    printf(" %.2f\n", node_carro->carro->preco);
+    printf(" %.2f\n", carro->preco);
 }
