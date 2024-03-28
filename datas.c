@@ -154,7 +154,7 @@ float preco_total(Data data1, Horas hora1, Data data2, Horas hora2, Parque * par
     preco_total = preco(dias, minutos, parque->menos1h, parque->mais1h, parque->maxdia); // calcula o preço total //
 
     return preco_total; // devolve o preço total //
-}
+} 
 
 void print_data_hora(Data data, Horas hora) {
     if(data.dia < 10) // se o dia for menor que 10 //
