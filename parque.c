@@ -57,59 +57,62 @@ int verifica_precos(int menos1h, int mais1h, int maxdia) {
 }
 
 void cria_parque(Parque ** parques, char* nome, int capacidade, float menos1h, float mais1h, float maxdia) {
+    // cria um parque com o nome, capacidade e preços dados //
     int i = 0;
-    Parque * parque = (Parque *) malloc(sizeof(Parque));
-    parque -> nome = (char *) malloc((strlen(nome)+1) * sizeof(char));
-    strcpy(parque -> nome, nome);
-    parque-> capacidade = capacidade;
-    parque-> lugares_disponiveis = capacidade;
-    parque-> menos1h = menos1h;
-    parque-> mais1h = mais1h;
-    parque-> maxdia = maxdia;
-    parque-> carros_dentro = NULL;
-    parque-> carros_fora = NULL;
-    parque-> head_cd = NULL;
-    parque-> head_cf = NULL;
+    Parque * parque = (Parque *) malloc(sizeof(Parque)); // aloca espaço para um parque //
+    parque -> nome = (char *) malloc((strlen(nome)+1) * sizeof(char)); // aloca espaço para o nome do parque //
+    strcpy(parque -> nome, nome); // copia o nome dado para o nome do parque //
+    parque-> capacidade = capacidade; // a capacidade do parque é a capacidade dada //
+    parque-> lugares_disponiveis = capacidade; // os lugares disponíveis são a capacidade do parque //
+    parque-> menos1h = menos1h; // o preço de menos de 1h é o preço dado //
+    parque-> mais1h = mais1h; // o preço de mais de 1h é o preço dado //
+    parque-> maxdia = maxdia; // o preço de um dia é o preço dado //
+    parque-> carros_dentro = NULL; // a lista de carros dentro é NULL //
+    parque-> carros_fora = NULL; // a lista de carros fora é NULL //
+    parque-> head_cd = NULL; // a cabeça da lista de carros dentro é NULL //
+    parque-> head_cf = NULL; // a cabeça da lista de carros fora é NULL //
 
-    for(; i < VECMAX && parques[i] != NULL; i++);
-    parques[i] = parque; // 3! //
+    for(; i < VECMAX && parques[i] != NULL; i++); 
+    // percorre o vetor de parques até encontrar um parque que seja NULL //
+    parques[i] = parque; // 3! // // o parque é adicionado ao vetor de parques //
 }
 
-void p_maior(Parque ** parques, char ** palavras) {
+void p_maior(Parque ** parques, char ** palavras) { // cria um parque  //
     char * nome;
-    int capacidade = atoi(palavras[2]);
-    float menos1h = atof(palavras[3]);
-    float mais1h = atof(palavras[4]);
-    float maxdia = atof(palavras[5]);
+    int capacidade = atoi(palavras[2]); // vai buscar a capacidade dada //
+    float menos1h = atof(palavras[3]); // vai buscar o preço de menos de 1h dado //
+    float mais1h = atof(palavras[4]); // vai buscar o preço de mais de 1h dado //
+    float maxdia = atof(palavras[5]); // vai buscar o preço máximo de um dia dado //
 
-    nome = (char*) malloc((strlen(palavras[1]) + 1) * sizeof(char));
-    strcpy(nome, palavras[1]);  
+    nome = (char*) malloc((strlen(palavras[1]) + 1) * sizeof(char));  // aloca espaço para o nome do parque //
+    strcpy(nome, palavras[1]);  // copia o nome dado para o nome do parque //
 
-    if(!verifica_qntparques(parques)) {
-        printf("too many parks.\n");
-        return;
+    if(!verifica_qntparques(parques)) { // se o número de parques for maior que 20 //
+        printf("too many parks.\n"); // imprime que há demasiados parques //
+        return; // e sai da função //
     }
 
-    if(!verifica_parque(parques, nome)) {
-        printf("%s: parking already exists.\n", nome);
-        return;
+    if(verifica_parque(parques, nome) == FALSE) { // se o parque já existir //
+        printf("%s: parking already exists.\n", nome); // imprime que o parque já existe //
+        return; // e sai da função //
     }
-    if(capacidade <= 0) {
-        printf("%d: invalid capacity.\n", capacidade);
-        return;
+    if(capacidade <= 0) { // se a capacidade for menor ou igual a 0 //
+        printf("%d: invalid capacity.\n", capacidade); // imprime que a capacidade é inválida //
+        return; // e sai da função //
     }
-    if(!verifica_precos(menos1h, mais1h, maxdia)) {
-        printf("invalid cost.\n");
-        return;
+    if(verifica_precos(menos1h, mais1h, maxdia) == FALSE) { // se os preços forem inválidos //
+        printf("invalid cost.\n"); // imprime que os preços são inválidos //
+        return; // e sai da função //
     }
 
-    cria_parque(parques, nome, capacidade, menos1h, mais1h, maxdia);
+    cria_parque(parques, nome, capacidade, menos1h, mais1h, maxdia); // cria o parque //
 }
 
-void p_menor(Parque ** parques) {
-    int i;
-    for(i = 0; i < VECMAX; i++) {
-        if(parques[i] != NULL) 
+void p_menor(Parque ** parques) { // imprime os parques no vetor parques //
+    int i; 
+    for(i = 0; i < VECMAX; i++) { // para cada parque no vetor de parques //
+        if(parques[i] != NULL) // se o parque não for NULL //
             printf("%s %d %d\n", parques[i] -> nome, parques[i] -> capacidade, parques[i] -> lugares_disponiveis);
+            // imprime o nome, a capacidade e os lugares disponíveis do parque //
     }
 }

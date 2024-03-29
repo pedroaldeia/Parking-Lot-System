@@ -9,6 +9,7 @@
 #include "entrada_e_saida.h"
 #include "remove.h"
 #include "hash.h"
+#include "veiculo.h"
 
 #define PRKMAX 20
 #define BUFSIZ 8192
@@ -31,40 +32,46 @@ int main () {
     hora_actual-> hora = 0;
     hora_actual-> minuto = -1;
 
-    while (linha[0] != 'q') {
-        switch(linha[0]){
-            case 'p':
-                if(strlen(linha) == 1) {
-                    p_menor(vec_parques);
+    while (linha[0] != 'q') { // enquanto o input não for 'q' //
+        switch(linha[0]){ // verifica o primeiro caracter do input //
+            case 'p': // caso seja 'p' //
+                if(strlen(linha) == 1) { // se o input for só 'p' //
+                    p_menor(vec_parques); // chama a função p_menor //
                 }
-                else {
-                    palavras = wordArray(linha);
-                    p_maior(vec_parques, palavras);
+                else { // se não //
+                    palavras = wordArray(linha); // divide o input em palavras //
+                    p_maior(vec_parques, palavras); // chama a função p_maior //
                     n_args = 6;
-                    free_input(palavras, n_args);
+                    free_input(palavras, n_args); // liberta a memória alocada para as palavras //
                 }
                 break;
             case 'e':
-                palavras = wordArray(linha);
-                e(vec_parques, hora_actual, data_actual, palavras, hashtable);
+                palavras = wordArray(linha); // divide o input em palavras //
+                e(vec_parques, hora_actual, data_actual, palavras, hashtable); // chama a função e //
                 n_args = 5;
-                free_input(palavras, n_args);
+                free_input(palavras, n_args); // liberta a memória alocada para as palavras //
                 break;
             case 's':
-                palavras = wordArray(linha);
-                s(vec_parques, hora_actual, data_actual, palavras, hashtable);
+                palavras = wordArray(linha); // divide o input em palavras //
+                s(vec_parques, hora_actual, data_actual, palavras, hashtable); // chama a função s //
                 n_args = 5;
-                free_input(palavras, n_args);
+                free_input(palavras, n_args); // liberta a memória alocada para as palavras //
+                break;
+            case 'v':
+                palavras = wordArray(linha); // divide o input em palavras //
+                v(hashtable, palavras); // chama a função v //
+                n_args = 2;
+                free_input(palavras, n_args); // liberta a memória alocada para as palavras //
                 break;
             case 'r':
-                palavras = wordArray(linha);
-                r(vec_parques, palavras);
+                palavras = wordArray(linha); // divide o input em palavras //
+                r(vec_parques, palavras); // chama a função r //
                 n_args = 2;
-                free_input(palavras, n_args);
+                free_input(palavras, n_args); // liberta a memória alocada para as palavras //
                 break;
         }
-        linha = lineinput();
+        linha = lineinput(); // recebe o próximo input //
     }
-    q(vec_parques, data_actual, hora_actual);
+    q(vec_parques, data_actual, hora_actual); // chama a função q //
     return 0;
 }

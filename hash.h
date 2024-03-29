@@ -12,12 +12,15 @@ typedef struct hash_node {
 typedef struct hash_list{
     Hash_node * head;
     Hash_node * tail;
+    int size;
 } Hash_list;
 #define HASH
 #endif
 
 
 #ifndef HASHFUNC
+int hash_index(Matricula matricula);
+
 void put_hashtable(Hash_list * hashtable, Carro * carro, Parque * parque);
 
 Carro * hash_procura_carro_dentro(Hash_list * hashtable, Matricula matricula);

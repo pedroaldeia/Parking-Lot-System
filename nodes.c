@@ -38,15 +38,15 @@ node* push(node* head, Carro * newcarro) { // adiciona um elemento numa lista de
     return newhead; // devolve a nova cabeça //
 }
 
-node * put(node * tail, Carro *newcarro) {
-    node * nexnode;
-    nexnode = (node*) malloc(sizeof(node));
+node * put(node * tail, Carro *newcarro) { // adiciona um elemento no fim //
+    node * nexnode; 
+    nexnode = (node*) malloc(sizeof(node)); // aloca espaço para um novo node //
 
-    if (tail != NULL) 
-        tail-> next = nexnode;
-    nexnode-> next = NULL;
-    nexnode-> carro = newcarro;
-    return nexnode;
+    if (tail != NULL) // se a lista não estiver vazia //
+        tail-> next = nexnode; // a cauda aponta para o novo node //
+    nexnode-> next = NULL; // o novo node aponta para null //
+    nexnode-> carro = newcarro; // o novo node aponta para o carro //
+    return nexnode; // devolve o novo node //
 }
 
 node* destroy(node* head) {

@@ -9,12 +9,12 @@
 #define NAMEMAX 100
 #define VECMAX 20
 
-int v[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+int v_meses[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 
 int verifica_datas(Data data) {
     if(data.mes < 13 && data.mes > 0) { // se o mês for de 1 a 12 //
-        if(data.dia > 0 && data.dia <= v[data.mes]) { // e se o dia for de 1 ao último dia do mês respectivo //
+        if(data.dia > 0 && data.dia <= v_meses[data.mes]) { // e se o dia for de 1 ao último dia do mês respectivo //
             return TRUE; // devolve TRUE (1) //
         }
     }
@@ -84,22 +84,22 @@ int diferenca_datas(Data data1, Data data2) {
     dias += ((data2.ano - data1.ano)*365); // por cada ano de diferença adiciona-se 365 dias //
 
     if(data1.mes < data2.mes) { // se o primeiro ano tiver mês maior //
-        dias += (v[data1.mes] - data1.dia); // adiciona-se os dias restantes do mês //
+        dias += (v_meses[data1.mes] - data1.dia); // adiciona-se os dias restantes do mês //
         if(data1.mes + 1 != data2.mes) {
             i = data1.mes + 1;
             while(i < data2.mes) {// por cada mês antes da ultima data //
-                dias += v[i];// adiciona-se os dias respetivos //
+                dias += v_meses[i];// adiciona-se os dias respetivos //
                 i++;
             }
         }
         dias += data2.dia; // adiciona-se os dias do mês da ultima data
     }
     if(data1.mes > data2.mes) { // se o mês da primeira data for maior //
-        dias += (- v[data1.mes] + data1.dia); // retira-se os dias restantes do mês //
+        dias += (- v_meses[data1.mes] + data1.dia); // retira-se os dias restantes do mês //
         if(data1.mes - 1 != data2.mes) {
             i = data1.mes - 1;
             while(i > data2.mes) {// por cada mês antes da ultima data //
-                dias -= v[i];// adiciona-se os dias respetivos //
+                dias -= v_meses[i];// adiciona-se os dias respetivos //
                 i--;
             }
         }
