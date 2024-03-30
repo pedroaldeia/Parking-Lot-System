@@ -13,15 +13,10 @@
 #define BUFFER 8192
 #define VECMAX 20
 #define HASHSIZE 113
+#define VECMAX 20
 
 
-void print_parques(Parque ** parques) {
-    for(int i = 0; i < VECMAX; i++) {
-        if(parques[i] != NULL) {
-            printf("%s\n", parques[i]->nome);
-        }
-    }
-}
+
 
 Parque* vec_parque_cnull(Parque **vetor_parques, char v[]) { 
     // devolve o ponteiro para o parque que tem o nome em questão //
@@ -74,7 +69,6 @@ void remove_entradas_hash(Hash_list * hashtable, Parque * parque){
     for (int i = 0; i < HASHSIZE; i++) {
         Hash_node *atual = hashtable[i].head;
         Hash_node *anterior = NULL;
-
         while (atual != NULL) {
             if (atual->parque == parque) {
                 Hash_node *temp = atual; // guarda o nó a ser removido //
@@ -86,13 +80,48 @@ void remove_entradas_hash(Hash_list * hashtable, Parque * parque){
                     atual = atual->next; // o atual passa a ser o próximo nó //
                 }
                 free(temp); // liberta o nó removido //
-            } 
-            else {
+            } else {
                 anterior = atual;
                 atual = atual->next; 
             }
         }
     }
+}
+
+Parque ** cria_copia_vec_parques(Parque ** parques){
+    int i;
+    Parque ** parques_novo = (Parque**) malloc(sizeof(Parque*) * VECMAX);
+    for(i = 0; i < VECMAX; i++) 
+        parques_novo[i] = parques[i];
+    return parques_novo;
+}
+
+void parques_sort(Parque ** parques, int tamanho) {
+    int i, j;
+    Parque * key;
+
+    for (i = 1; i < tamanho; i++) {
+        key = parques[i];
+        j = i - 1;
+
+        while (j >= 0 && strcmp(parques[j]->nome, key->nome) > 0) {
+            parques[j + 1] = parques[j];
+            j = j - 1;
+        }
+        parques[j + 1] = key;
+    }
+}
+
+void print_parques(Parque ** parques) {
+    Parque ** parques_novo = cria_copia_vec_parques(parques);
+    int qntparques = qnt_parques(parques);
+    parques_sort(parques_novo, qntparques);
+    for(int i = 0; i < VECMAX; i++) {
+        if(parques_novo[i] != NULL) {
+            printf("%s\n", parques_novo[i]->nome);
+        }
+    }
+    free(parques_novo);
 }
 
 void muda_parques_lugar(Parque ** parques, int indice, int qntparques) {
