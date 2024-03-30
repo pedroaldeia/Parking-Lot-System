@@ -63,7 +63,7 @@ int indice_parque(Parque ** vetor_parques, char v[]) {
 }
 
 int verifica_precos(int menos1h, int mais1h, int maxdia) {
-    if(menos1h < 0 || mais1h < 0 || maxdia < 0) // se algum dos preços for menor que 0 //
+    if(menos1h <= 0 || mais1h <= 0 || maxdia <= 0) // se algum dos preços for menor que 0 //
         return FALSE; // devolve FALSE (0) //
     if(menos1h > mais1h || mais1h > maxdia) // se o preço de menos de 1h for maior que o preço de mais de 1h ou o preço de mais de 1h for maior que o preço de um dia //
         return FALSE; // devolve FALSE (0) //
