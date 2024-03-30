@@ -52,7 +52,7 @@ void removelista_dentro_e_fora(Parque * parque) {
     }
     
 }
-
+/*
 void remove_entradas_hash(Hash_list * hashtable, Parque * parque){
     Hash_node * head;
     for (int i = 0; i < HASHSIZE; i++) {
@@ -68,6 +68,32 @@ void remove_entradas_hash(Hash_list * hashtable, Parque * parque){
         }
     }
 }
+*/
+
+void remove_entradas_hash(Hash_list * hashtable, Parque * parque){
+    for (int i = 0; i < HASHSIZE; i++) {
+        Hash_node *atual = hashtable[i].head;
+        Hash_node *anterior = NULL;
+
+        while (atual != NULL) {
+            if (atual->parque == parque) {
+                Hash_node *temp = atual; // guarda o nó a ser removido //
+                if (anterior == NULL) { // se o nó a ser removido for o primeiro da lista //
+                    hashtable[i].head = atual->next; // a novo head é o próximo nó //
+                    atual = atual->next; // e o atual passa a ser o próximo nó //
+                } else {
+                    anterior->next = atual->next; // o nó anterior passa a apontar para o próximo nó //
+                    atual = atual->next; // o atual passa a ser o próximo nó //
+                }
+                free(temp); // liberta o nó removido //
+            } 
+            else {
+                anterior = atual;
+                atual = atual->next; 
+            }
+        }
+    }
+}
 
 void muda_parques_lugar(Parque ** parques, int indice, int qntparques) {
     for(int i = indice; i < qntparques; i++) {
@@ -76,11 +102,12 @@ void muda_parques_lugar(Parque ** parques, int indice, int qntparques) {
     parques[qntparques] = NULL;
 }
 
-void removeprk(Parque ** parques, int indice) {
+void removeprk(Parque ** parques, int indice, Hash_list * hashtable) {
     Parque * parque = parques[indice]; // aponta para o parque com o índice dado //
     int qntparques = qnt_parques(parques); // vai buscar o número de parques //
     
     removelista_dentro_e_fora(parque); // remove as listas de carros //
+    remove_entradas_hash(hashtable, parque); // remove as entradas na hashtable //
 
     free(parque->nome); // liberta o espaço do nome //
     free(parque); // liberta o espaço do parque //
@@ -88,25 +115,26 @@ void removeprk(Parque ** parques, int indice) {
     muda_parques_lugar(parques, indice, qntparques); // muda os parques de lugar //
 }
 
-void q(Parque ** parques, Data * data_actual, Horas * hora_actual) {
+void q(Parque ** parques, Data * data_actual, Horas * hora_actual, Hash_list * hashtable) {
     for(int i = 0; i < VECMAX; i++) {
         if(parques[i] != NULL)
-            removeprk(parques, i);
+            removeprk(parques, i, hashtable);
     }
     free(data_actual);
     free(hora_actual);
+    free(hashtable);
 }
 
-void r(Parque ** parques, char ** palavras) {
+void r(Parque ** parques, char ** palavras, Hash_list * hashtable){
     char * nome = palavras[1];
     int indice = indice_parque(parques, nome);
 
     if(indice == -1) {
-        printf("%s: no such park.\n", nome);
+        printf("%s: no such parking.\n", nome);
         return;
     }
 
-    removeprk(parques, indice);
+    removeprk(parques, indice, hashtable);
     print_parques(parques);
 }
 

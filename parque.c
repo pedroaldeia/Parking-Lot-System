@@ -89,6 +89,7 @@ void cria_parque(Parque ** parques, char* nome, int capacidade, float menos1h, f
     for(; i < VECMAX && parques[i] != NULL; i++); 
     // percorre o vetor de parques até encontrar um parque que seja NULL //
     parques[i] = parque; // 3! // // o parque é adicionado ao vetor de parques //
+    free(nome); // liberta a memória alocada para o nome //
 }
 
 void p_maior(Parque ** parques, char ** palavras) { // cria um parque  //

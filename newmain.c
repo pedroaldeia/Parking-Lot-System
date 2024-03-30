@@ -38,6 +38,7 @@ int main () {
             case 'p': // caso seja 'p' //
                 if(strlen(linha) == 1) { // se o input for só 'p' //
                     p_menor(vec_parques); // chama a função p_menor //
+                    free(linha); // liberta a memória alocada para a linha //
                 }
                 else { // se não //
                     palavras = wordArray(linha); // divide o input em palavras //
@@ -71,7 +72,7 @@ int main () {
                 break;
             case 'r':
                 palavras = wordArray(linha); // divide o input em palavras //
-                r(vec_parques, palavras); // chama a função r //
+                r(vec_parques, palavras, hashtable); // chama a função r //
                 n_args = 2;
                 free_input(palavras, n_args); // liberta a memória alocada para as palavras //
                 break;
@@ -79,6 +80,6 @@ int main () {
         linha = lineinput(); // recebe o próximo input //
     }
     free(linha); // liberta a memória alocada para a linha //
-    q(vec_parques, data_actual, hora_actual); // chama a função q //
+    q(vec_parques, data_actual, hora_actual, hashtable); // chama a função q //
     return 0;
 }
