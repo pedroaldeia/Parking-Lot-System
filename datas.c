@@ -62,6 +62,23 @@ int compara_datas(Data data1, Horas hora1, Data data2, Horas hora2) {
         return TRUE;
     return TRUE;
 }
+int compara_so_datas(Data data1, Data data2) {
+    if(data1.ano > data2.ano) // compara cada elemento das datas e das horas //
+        return FALSE; // se o elemento da data 1 for maior do que o da data 2, devolve FALSE //
+    if(data2.ano > data1.ano) // se o elemento da data 2 for maior, devolve TRUE //
+        return TRUE; // se forem iguais, continua a comparar os valores por ordem decrescente de importância //
+
+    if(data1.mes > data2.mes)
+        return FALSE;
+    if(data2.mes > data1.mes)
+        return TRUE;
+    
+    if(data1.dia > data2.dia)
+        return FALSE;
+    if(data2.dia > data1.dia)
+        return TRUE;
+    return FALSE;
+}
 
 int diferenca_horas(Horas horas1, Horas horas2) {
     int minHoras1, minHoras2;
@@ -174,6 +191,29 @@ void print_data_hora(Data data, Horas hora) {
         printf("0%d", hora.minuto); // imprime o minuto com um 0 à frente //
     else
         printf("%d", hora.minuto); // se não, imprime o minuto normalmente //
+}
+
+void print_so_hora(Horas hora) {
+    if(hora.hora < 10) // se a hora for menor que 10 //
+        printf("0%d:", hora.hora); // imprime a hora com um 0 à frente //
+    else
+        printf("%d:", hora.hora); // se não, imprime a hora normalmente //
+    if(hora.minuto < 10) // se o minuto for menor que 10 //
+        printf("0%d", hora.minuto); // imprime o minuto com um 0 à frente //
+    else
+        printf("%d", hora.minuto); // se não, imprime o minuto normalmente //
+}
+
+void print_so_data(Data data) {
+    if(data.dia < 10) // se o dia for menor que 10 //
+        printf("0%d-", data.dia); // imprime o dia com um 0 à frente //
+    else
+        printf("%d-", data.dia); // se não, imprime o dia normalmente //
+    if(data.mes < 10) // se o mês for menor que 10 //
+        printf("0%d-", data.mes); // imprime o mês com um 0 à frente //
+    else
+        printf("%d-", data.mes); // se não, imprime o mês normalmente //
+    printf("%d", data.ano); // imprime o ano //
 }
 
 /*

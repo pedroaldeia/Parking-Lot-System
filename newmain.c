@@ -10,6 +10,7 @@
 #include "remove.h"
 #include "hash.h"
 #include "veiculo.h"
+#include "faturacao.h"
 
 #define PRKMAX 20
 #define BUFSIZ 8192
@@ -62,6 +63,11 @@ int main () {
                 v(hashtable, palavras); // chama a função v //
                 n_args = 2;
                 free_input(palavras, n_args); // liberta a memória alocada para as palavras //
+                break;
+            case 'f':
+                palavras = wordArray(linha); // divide o input em palavras //
+                n_args = conta_palavras(palavras); // conta o número de palavras //
+                f(vec_parques, palavras, n_args, data_actual); // chama a função f //
                 break;
             case 'r':
                 palavras = wordArray(linha); // divide o input em palavras //

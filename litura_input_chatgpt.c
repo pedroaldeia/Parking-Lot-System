@@ -60,7 +60,7 @@ int splitLine(char *line, char ***words) {
     int length = end - start;
     if (length > 0) {
         // Allocate memory for the word
-        wordList[count] = malloc((length + 1) * sizeof(char));
+        wordList[count] = malloc((length + 2) * sizeof(char));
         if (wordList[count] == NULL) {
             printf("Memory allocation failed.\n");
             exit(1);
@@ -76,6 +76,7 @@ int splitLine(char *line, char ***words) {
         }
         count++;
     }
+    wordList[count] = NULL; // Mark the end of the list with a NULL pointer
 
     // Reallocate memory to fit exactly the number of words
     *words = realloc(wordList, count * sizeof(char*));
@@ -105,6 +106,14 @@ void free_input(char ** palavras, int n_args) {
         free(palavras[i]);
     }
     free(palavras);
+}
+
+int conta_palavras(char ** line) {
+    int i = 0;
+    while(line[i] != NULL) {
+        i++;
+    }
+    return i;
 }
 
 // Main function to read input line and return list of words
