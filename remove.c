@@ -12,7 +12,7 @@
 
 #define BUFFER 8192
 #define VECMAX 20
-#define HASHSIZE 191
+#define HASHSIZE 113
 
 
 void print_parques(Parque ** parques) {
