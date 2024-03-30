@@ -19,6 +19,9 @@ typedef struct hash_list{
 
 
 #ifndef HASHFUNC
+
+void hash_removenode(Hash_node * head);
+
 int hash_index(Matricula matricula);
 
 void put_hashtable(Hash_list * hashtable, Carro * carro, Parque * parque);

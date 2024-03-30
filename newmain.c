@@ -78,6 +78,7 @@ int main () {
         }
         linha = lineinput(); // recebe o próximo input //
     }
+    free(linha); // liberta a memória alocada para a linha //
     q(vec_parques, data_actual, hora_actual); // chama a função q //
     return 0;
 }

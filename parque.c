@@ -20,9 +20,14 @@ int verifica_capacidade(Parque* parque) {
     return TRUE; // se não devolve TRUE (1) //
 }
 
-int verifica_qntparques(Parque ** parques) {
+int qnt_parques(Parque ** parques) {
     int i = 0;
     for(; i < VECMAX && parques[i] != NULL; i++); // percorre o vetor de parques até encontrar um parque que seja NULL //
+    return i; // devolve o número de parques //
+}
+
+int verifica_qntparques(Parque ** parques) {
+    int i = qnt_parques(parques); // vai buscar o número de parques //
     if(i == VECMAX) // se o i for igual a VECMAX (20) //
         return FALSE; // devolve FALSE (0) //
     return TRUE; // se não devolve TRUE (1) //
@@ -46,6 +51,15 @@ Parque* vec_parque(Parque **vetor_parques, char v[]) {
             return vetor_parques[i]; // devolve o ponteiro para o parque com o nome dado //
     }
     return NULL; // se não devolve vetor nulo //
+}
+
+int indice_parque(Parque ** vetor_parques, char v[]) {
+    int i;
+    for(i = 0; i < VECMAX; i++) { // para cada parque no vetor //
+        if(vetor_parques[i] != NULL && !strcmp((vetor_parques[i])->nome, v)) // compara o nome do parque com o dado, se for igual //
+            return i; // devolve o índice do parque com o nome dado //
+    }
+    return -1; // se não devolve -1 //
 }
 
 int verifica_precos(int menos1h, int mais1h, int maxdia) {
