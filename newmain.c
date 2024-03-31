@@ -12,14 +12,12 @@
 #include "veiculo.h"
 #include "faturacao.h"
 
-#define PRKMAX 20
-#define BUFSIZ 8192
-#define IN 0
-#define OUT 1
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // Recebe o input e chama as funções correspondentes //
 // Não recebe argumentos //
 // Não devolve nada //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 int main () {
     Parque * vec_parques[PRKMAX] = {NULL}; // inicializar o vetor de parques //
     char  * linha = lineinput(); // recebe o primeiro input //

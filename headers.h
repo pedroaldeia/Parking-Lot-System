@@ -1,6 +1,13 @@
 
 #include <stdio.h>
 
+#define PRKMAX 20
+#define BUFSIZ 8192
+#define IN 0
+#define OUT 1
+#define TRUE 1
+#define FALSE 0
+
 #ifndef DATA
 typedef struct {
     int dia;

@@ -8,10 +8,6 @@
 #include "entrada_e_saida.h"
 #include "veiculo.h"
 
-#define IN 0
-#define OUT 1
-#define FALSE 0
-#define TRUE 1
 
 Matricula cria_matricula(char * matricula) { // cria uma matricula a partir de uma string //
     Matricula mat;

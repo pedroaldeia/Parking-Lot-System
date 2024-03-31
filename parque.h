@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#ifndef PARQUE_FUNC
+
 // Cria um parque //
 void p_maior(Parque ** parques, char ** palavras);
 
@@ -14,4 +16,7 @@ int qnt_parques(Parque ** parques);
 
 // Devolve o índice do parque com o nome v //
 int indice_parque(Parque ** vetor_parques, char v[]);
+
+#define PARQUE_FUNC
+#endif
 

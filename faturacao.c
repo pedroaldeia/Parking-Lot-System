@@ -9,32 +9,14 @@
 #include "leitura.h"
 #include "faturacao.h"
 
-#define TRUE 1
-#define FALSE 0
+// Funções de faturação //
 
 
-typedef struct node_preco{
-    float preco;
-    Data data;
-    struct node_preco * next;
-} node_preco;
-
-typedef struct list_preco{
-    node_preco * head;
-    node_preco * tail;
-    Data data;
-    int size;
-} List_preco;
-
-node_preco * push_preco(node_preco * head, float preco, Data data) { //push no inicio
-    node_preco * novo = (node_preco*) malloc(sizeof(node_preco));
-    novo->preco = preco;
-    novo->data = data;
-    novo->next = head;
-    head = novo;
-    return head;
-}
-
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Põe um preço no final da lista de preços //
+// Recebe a lista de preços, o preço e a data //
+// Não devolve nada //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 void put_preco(List_preco * lista_precos, float preco, Data data) { // adiciona um elemento no fim //
     node_preco * novo = (node_preco*) malloc(sizeof(node_preco));
     novo->preco = preco;
@@ -51,10 +33,20 @@ void put_preco(List_preco * lista_precos, float preco, Data data) { // adiciona 
     lista_precos->size++; // aumenta o tamanho da lista //
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Devolve o preço pago por um carro //
+// Recebe um node //
+// Devolve o preço (float) //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 float devolve_preco_carro(node * nodecarro) { // devolve o preço pago por um carro //
     return nodecarro->carro->preco; 
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Devolve a faturação por dia do parque //
+// Recebe a cabeça da lista de carros //
+// Devolve a lista de nodes preço //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 List_preco * devolve_preco_dias(node *head_carros) { // devolve a faturação por dia //
     List_preco * list_precos = (List_preco*) malloc(sizeof(List_preco));
     list_precos->head = NULL; // inicializa os componentes da lista //
@@ -63,8 +55,10 @@ List_preco * devolve_preco_dias(node *head_carros) { // devolve a faturação po
 
     while(head_carros != NULL) { // enquanto a cabeça da lista de carros não for null //
         while(head_carros != NULL && list_precos->head != NULL && 
-        mesma_data(head_carros->carro->D_saida, list_precos->tail->data)) { // se a lista não for NULL e a data do carro for igual à data da cauda //
-            list_precos->tail->preco += devolve_preco_carro(head_carros);// soma o preço do carro à cauda //
+        mesma_data(head_carros->carro->D_saida, list_precos->tail->data)) { 
+            // se a lista não for NULL e a data do carro for igual à data da cauda //
+            list_precos->tail->preco += devolve_preco_carro(head_carros); 
+            // soma o preço do carro à cauda //
             head_carros = head_carros->next; // e passa para o próximo carro //
         }
         if (head_carros != NULL) { // se a data passar a ser diferente //
@@ -76,6 +70,12 @@ List_preco * devolve_preco_dias(node *head_carros) { // devolve a faturação po
     return list_precos;
 }
 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Imprime a faturação por dia //
+// Recebe a lista de preços //
+// Não devolve nada //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 void print_precos(List_preco * list_precos) { // imprime a faturação por dia //
     node_preco * head_precos = list_precos->head; // aponta para a cabeça da lista //
     while(head_precos != NULL) { // enquanto a cabeça não for null //
@@ -86,6 +86,12 @@ void print_precos(List_preco * list_precos) { // imprime a faturação por dia /
     }
 }
 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Liberta a memória alocada para a lista de preços //
+// Recebe a lista de preços //
+// Não devolve nada //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 void free_precos(List_preco * list_precos) { // liberta a memória alocada para a lista de preços //
     node_preco * head_precos = list_precos->head; // aponta para a cabeça da lista //
     node_preco * temp;
@@ -96,15 +102,27 @@ void free_precos(List_preco * list_precos) { // liberta a memória alocada para 
     }
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Faz as operações necessárias para imprimir a faturação de um parque por dia //
+// Recebe o parque //
+// Não devolve nada //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 void faturacao(Parque * parque) { // imprime a faturação do parque //
     node * head_carros = parque->head_cf; // aponta para a cabeça da lista de carros //
-    List_preco * lista_precos = devolve_preco_dias(head_carros); // aponta para a cabeça da lista de preços //
+    List_preco * lista_precos = devolve_preco_dias(head_carros); 
+    // aponta para a cabeça da lista de preços //
     print_precos(lista_precos); // imprime a faturação por dia //
     free_precos(lista_precos); // liberta a memória dos nodes da lista de preços //
     free(lista_precos); // liberta a memória alocada para a lista de preços //
 }
 
-void print_fatcarro(node * head_carros, Data data) { // imprime a faturação de um parque num determinado dia //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Imprime a faturação de um parque por carro num determinado dia //
+// Recebe a cabeça da lista de carros e a data //
+// Não devolve nada //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+void print_fatcarro(node * head_carros, Data data) { 
+    // imprime a faturação de um parque num determinado dia //
     while(head_carros != NULL && !mesma_data(head_carros->carro->D_saida, data)) { 
         // enquanto a cabeça não for null e a data da fatura for diferente da data //
         head_carros = head_carros->next; // passa para o próximo carro //
@@ -119,6 +137,11 @@ void print_fatcarro(node * head_carros, Data data) { // imprime a faturação de
     }
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Verifica se os argumentos são válidos e faz imprimir a faturação de um parque num determinado dia //
+// Recebe o vetor de parques, as palavras e a data atual //
+// Não devolve nada //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 void f_menor(Parque ** parques, char ** palavras, Data * data_actual) {
     char * nome = palavras[1];
     Parque * parque = vec_parque(parques, nome); // aponta para o parque com o nome dado //
@@ -141,6 +164,11 @@ void f_menor(Parque ** parques, char ** palavras, Data * data_actual) {
     print_fatcarro(parque->head_cf, data); // imprime a faturação de um carro no dia dado //
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Verifica se os argumentos são válidos e faz imprimir a faturação de um parque por dia //
+// Recebe o vetor de parques e as palavras //
+// Não devolve nada //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 void f_maior(Parque ** parques, char ** palavras) { // imprime a faturação de um parque por dias //
     char * nome = palavras[1];
     Parque * parque = vec_parque(parques, nome); // aponta para o parque com o nome dado //
@@ -153,7 +181,14 @@ void f_maior(Parque ** parques, char ** palavras) { // imprime a faturação de 
     faturacao(parque); // imprime a faturação do parque por dias //
 }
 
-void f(Parque ** parques, char ** palavras, int n_palavras, Data * data_actual) { // chama uma das funções f //
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Decide qual das funções f chamar //
+// Recebe o vetor de parques, as palavras, o número de palavras e a data atual //
+// Não devolve nada //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+void f(Parque ** parques, char ** palavras, int n_palavras, Data * data_actual) { 
+    // chama uma das funções f //
     if (n_palavras < 3) { // se o input tiver menos de 3 palavras //
         f_maior(parques, palavras); // chama a função f_maior //
     }

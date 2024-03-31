@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-#include "headers.h"
 #include "hash.h"
 
 #ifndef ENTRADA_E_SAIDA

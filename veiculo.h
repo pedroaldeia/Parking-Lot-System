@@ -1,8 +1,5 @@
 #include <stdio.h>
 
-#include "headers.h"
-#include "hash.h"
-
 #ifndef VEICULO_FUNC
 
 // Imprime os registos de parques de um veículo //
