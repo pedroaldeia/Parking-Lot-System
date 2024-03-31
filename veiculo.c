@@ -61,7 +61,7 @@ void sort_entradas_nome_data(Hash_node **entradas, int tamanho) {
 
 Hash_node ** busca_entradas(Hash_list * hashtable, Matricula matricula) { // procura as entradas de um veículo //
     int index = hash_index(matricula), tamanho = hashtable[index].size + 1, i;
-    Hash_node ** entradas;
+    Hash_node ** entradas = NULL;
     Hash_node * node = hashtable[index].head; // aponta para o primeiro node da lista de faturações //
 
     entradas = (Hash_node**) malloc(sizeof(Hash_node) * tamanho);  // aloca espaço para um array de nodes //
@@ -76,6 +76,7 @@ Hash_node ** busca_entradas(Hash_list * hashtable, Matricula matricula) { // pro
     if (i == 0) { // se não houver entradas //
         printf("%s-%s-%s: no entries found in any parking.\n", matricula.par1, matricula.par2, matricula.par3);
         // devolve uma mensagem de erro //
+        free(entradas); // liberta o espaço alocado para o array de nodes //
         return NULL; // e devolve NULL //
     }
     entradas[i] = NULL; // coloca um NULL no fim do array //
