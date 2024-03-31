@@ -128,7 +128,7 @@ void put_hashtable(Hash_list * hashtable, Carro * carro, Parque * parque) {
 }
 
 
-
+// Procura o
 Carro * hash_procura_carro_dentro(Hash_list * hashtable, Matricula matricula) { 
     // procura um carro dentro da hashtable // 
     int index = hash_index(matricula); // vai buscar o índice da matricula //
