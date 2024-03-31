@@ -12,8 +12,6 @@
 
 #define BUFFER 8192
 #define VECMAX 20
-#define HASHSIZE 97
-#define VECMAX 20
 
 
 

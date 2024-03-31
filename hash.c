@@ -9,7 +9,6 @@
 #include "entrada_e_saida.h"
 #include "hash.h" 
 
-#define HASHSIZE 97
 #define IN 0
 #define OUT 1
 #define TRUE 1

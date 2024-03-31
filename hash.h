@@ -2,6 +2,8 @@
 
 #include "headers.h"
 
+#define HASHSIZE 61
+
 #ifndef HASH
 typedef struct hash_node {
     Carro * carro;
