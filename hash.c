@@ -50,7 +50,7 @@ void hash_removenode(Hash_node * head) { // retira um elemento de uma lista de n
         return;
     toremove = head->next; // aponta para o node a retirar //
     head->next = head->next->next; // retira o node da lista //
-    free(toremove); // liberta o node //
+    free(toremove);
 }
 
 
@@ -63,7 +63,7 @@ Hash_node * hash_push(Hash_node * head, Carro * newcarro, Parque * parque) {
     Hash_node * newhead; 
     newhead = (Hash_node*) malloc(sizeof(Hash_node)); // aloca espaço para um novo node //
     newhead-> next = head; // adiciona o ponteiro para a cabeça no novo node //
-    newhead-> carro = newcarro; // adiciona a informação no novo node //
+    newhead-> carro = newcarro; 
     newhead-> parque = parque;
     return newhead; // devolve a nova cabeça //
 }
@@ -107,10 +107,9 @@ int hash_index(Matricula matricula){
 // Não devolve nada //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 void put_hashtable(Hash_list * hashtable, Carro * carro, Parque * parque) {
-    // põe um node na hashtable //
     int index = hash_index(carro->matricula); // vai buscar o índice da matricula //
     Hash_node * nexnode;
-    nexnode = (Hash_node*) malloc(sizeof(Hash_node)); // aloca espaço para um novo node //
+    nexnode = (Hash_node*) malloc(sizeof(Hash_node));
 
     if (hashtable[index].tail != NULL) { // se a cauda não for null //
         hashtable[index].tail-> next = nexnode; // a cauda aponta para o novo node //
@@ -121,9 +120,9 @@ void put_hashtable(Hash_list * hashtable, Carro * carro, Parque * parque) {
         hashtable[index].head = nexnode; // a cabeça passa a ser o novo node //
         hashtable[index].tail = nexnode; // e a cauda também //
     }
-    nexnode-> next = NULL; // o ponteiro para o node a seguir é null //
-    nexnode-> carro = carro; // o node aponta para o carro //
-    nexnode-> parque = parque; // o node aponta para o parque //
+    nexnode-> next = NULL;
+    nexnode-> carro = carro; 
+    nexnode-> parque = parque;
     hashtable[index].size++; // aumenta o tamanho da lista na hashtable //
 }
 
@@ -133,15 +132,14 @@ void put_hashtable(Hash_list * hashtable, Carro * carro, Parque * parque) {
 // Devolve um ponteiro para o carro encontrado (Carro *) //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 Carro * hash_procura_carro_dentro(Hash_list * hashtable, Matricula matricula) { 
-    // procura um carro dentro da hashtable // 
     int index = hash_index(matricula); // vai buscar o índice da matricula //
     Hash_node * node = hashtable[index].head; // aponta para o primeiro node da lista de faturações //
-    while(node != NULL) { // enquanto o node não for null //
+    while(node != NULL) { 
         if(mesma_matricula(node->carro->matricula, matricula) && node->carro->dentro == IN) {
             // se a matricula do carro for igual à matricula procurada e o carro estiver dentro //
             return node->carro; // devolve o carro //
         }
-        node = node->next; // se não passa para o próximo node //
+        node = node->next; 
     }
     return NULL; // se não encontrar devolve null //
 }
@@ -153,10 +151,9 @@ Carro * hash_procura_carro_dentro(Hash_list * hashtable, Matricula matricula) {
 // Devolve TRUE se o carro estiver dentro, FALSE se não estiver //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 int hash_carro_dentro(Hash_list * hashtable, Matricula matricula){ 
-    // verifica se um carro está dentro da hashtable //
     if (hash_procura_carro_dentro(hashtable, matricula) != NULL) // se o carro estiver dentro //
-        return TRUE; // devolve true //
-    return FALSE; // se não devolve false //
+        return TRUE; 
+    return FALSE; 
 }
 
 
@@ -166,17 +163,16 @@ int hash_carro_dentro(Hash_list * hashtable, Matricula matricula){
 // Devolve um ponteiro para o carro encontrado (Carro *) //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 Carro * hash_procura_carro_1parque(Hash_list * hashtable, Matricula matricula, Parque * parque){
-    // procura um carro num parque //
     int index = hash_index(matricula); // vai buscar o índice da matricula //
     Hash_node * node = hashtable[index].head; // aponta para o primeiro node da lista de faturações //
-    while(node != NULL) { // enquanto o node não for null //
+    while(node != NULL) { 
         if(mesma_matricula(node->carro->matricula, matricula) && node->parque == parque 
         && node->carro->dentro == IN) {
         // se a matricula do carro for igual à matricula procurada, o parque for igual ao procurado 
         // e o carro estiver dentro //
             return node->carro; // devolve o carro //
         }
-        node = node->next; // se não passa para o próximo node //
+        node = node->next; 
     }
     return NULL; // se não encontrar devolve null //
 }
@@ -189,12 +185,11 @@ Carro * hash_procura_carro_1parque(Hash_list * hashtable, Matricula matricula, P
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 Hash_list * cria_hash() { 
     Hash_list * hashtable = (Hash_list*) malloc(sizeof(Hash_list) * HASHSIZE); 
-    // aloca espaço para a hashtable //
     int i;
     for(i = 0; i < HASHSIZE; i++) { // para cada índice //
         hashtable[i].head = NULL; // inicializa os componentes da lista a NULL e 0 //
         hashtable[i].tail = NULL;
         hashtable[i].size = 0;
     }
-    return hashtable; // devolve a hashtable //
+    return hashtable; 
 }

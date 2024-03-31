@@ -47,24 +47,24 @@ float devolve_preco_carro(node * nodecarro) { // devolve o preço pago por um ca
 // Recebe a cabeça da lista de carros //
 // Devolve a lista de nodes preço //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-List_preco * devolve_preco_dias(node *head_carros) { // devolve a faturação por dia //
+List_preco * devolve_preco_dias(node *head_carros) { 
     List_preco * list_precos = (List_preco*) malloc(sizeof(List_preco));
-    list_precos->head = NULL; // inicializa os componentes da lista //
+    list_precos->head = NULL; 
     list_precos->tail = NULL;
     list_precos->size = 0;
 
-    while(head_carros != NULL) { // enquanto a cabeça da lista de carros não for null //
+    while(head_carros != NULL) { 
         while(head_carros != NULL && list_precos->head != NULL && 
         mesma_data(head_carros->carro->D_saida, list_precos->tail->data)) { 
             // se a lista não for NULL e a data do carro for igual à data da cauda //
             list_precos->tail->preco += devolve_preco_carro(head_carros); 
             // soma o preço do carro à cauda //
-            head_carros = head_carros->next; // e passa para o próximo carro //
+            head_carros = head_carros->next;
         }
         if (head_carros != NULL) { // se a data passar a ser diferente //
             // adiciona um novo node à lista //
             put_preco(list_precos, devolve_preco_carro(head_carros), head_carros->carro->D_saida);
-            head_carros = head_carros->next; // passa para o próximo carro //
+            head_carros = head_carros->next;
         }
     }
     return list_precos;
@@ -76,13 +76,13 @@ List_preco * devolve_preco_dias(node *head_carros) { // devolve a faturação po
 // Recebe a lista de preços //
 // Não devolve nada //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-void print_precos(List_preco * list_precos) { // imprime a faturação por dia //
-    node_preco * head_precos = list_precos->head; // aponta para a cabeça da lista //
+void print_precos(List_preco * list_precos) { 
+    node_preco * head_precos = list_precos->head; 
     while(head_precos != NULL) { // enquanto a cabeça não for null //
-        print_so_data(head_precos->data); // imprime a data //
+        print_so_data(head_precos->data);
         printf(" %.2f\n", head_precos->preco);
         // imprime a data e o preço //
-        head_precos = head_precos->next; // passa para o próximo node //
+        head_precos = head_precos->next; 
     }
 }
 
@@ -92,8 +92,8 @@ void print_precos(List_preco * list_precos) { // imprime a faturação por dia /
 // Recebe a lista de preços //
 // Não devolve nada //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-void free_precos(List_preco * list_precos) { // liberta a memória alocada para a lista de preços //
-    node_preco * head_precos = list_precos->head; // aponta para a cabeça da lista //
+void free_precos(List_preco * list_precos) { 
+    node_preco * head_precos = list_precos->head; 
     node_preco * temp;
     while(head_precos != NULL) { // enquanto a cabeça não for null //
         temp = head_precos; 
@@ -122,7 +122,6 @@ void faturacao(Parque * parque) { // imprime a faturação do parque //
 // Não devolve nada //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 void print_fatcarro(node * head_carros, Data data) { 
-    // imprime a faturação de um parque num determinado dia //
     while(head_carros != NULL && !mesma_data(head_carros->carro->D_saida, data)) { 
         // enquanto a cabeça não for null e a data da fatura for diferente da data //
         head_carros = head_carros->next; // passa para o próximo carro //
@@ -133,7 +132,7 @@ void print_fatcarro(node * head_carros, Data data) {
             head_carros->carro->matricula.par3); // imprime a matrícula //
         print_so_hora(head_carros->carro->H_saida); // imprime a data e a hora de saída //
         printf(" %.2f\n", head_carros->carro->preco); // imprime o preço pago pelo carro //
-        head_carros = head_carros->next; // passa para a próxima fatura //
+        head_carros = head_carros->next;
     }
 }
 
@@ -148,7 +147,7 @@ void f_menor(Parque ** parques, char ** palavras, Data * data_actual) {
     Data data;
 
     if(parque == NULL) { // se o parque não existir //
-        printf("%s: no such park.\n", nome); // imprime que o parque não existe //
+        printf("%s: no such park.\n", nome); 
         return;
     }
 
@@ -157,7 +156,7 @@ void f_menor(Parque ** parques, char ** palavras, Data * data_actual) {
     if(verifica_datas(data) == FALSE || (compara_so_datas(data, *(data_actual))  == FALSE
         && mesma_data(data, *data_actual) == FALSE)){
         // se a data for inválida ou se a data for posterior à data atual //
-        printf("invalid date.\n"); // imprime que a data é inválida //
+        printf("invalid date.\n"); 
         return;
     }
 
@@ -174,7 +173,7 @@ void f_maior(Parque ** parques, char ** palavras) { // imprime a faturação de 
     Parque * parque = vec_parque(parques, nome); // aponta para o parque com o nome dado //
 
     if(parque == NULL) { // se o parque não existir //
-        printf("%s: no such park.\n", nome); // imprime que o parque não existe //
+        printf("%s: no such park.\n", nome);
         return;
     }
 
@@ -188,11 +187,10 @@ void f_maior(Parque ** parques, char ** palavras) { // imprime a faturação de 
 // Não devolve nada //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 void f(Parque ** parques, char ** palavras, int n_palavras, Data * data_actual) { 
-    // chama uma das funções f //
     if (n_palavras < 3) { // se o input tiver menos de 3 palavras //
-        f_maior(parques, palavras); // chama a função f_maior //
+        f_maior(parques, palavras);
     }
     else {
-        f_menor(parques, palavras, data_actual); // chama a função f_menor //
+        f_menor(parques, palavras, data_actual);
     }
 }

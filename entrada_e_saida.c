@@ -28,23 +28,23 @@ int verifica_matriculas(Matricula matricula){
                 numeros++; // e se o segundo também for, passa //
             
             else
-                return FALSE; // se não devolve FALSE //
+                return FALSE; 
         }
         else {
             if(v[i][0] <= 'Z' && v[i][0] >= 'A') { //verifica se o primeiro elemento é uma letra maiúscula //
                 if(v[i][1] <= 'Z' && v[i][1] >= 'A')
                     letras++; // e se o segundo também for, passa //
                 else
-                    return FALSE; // se não devolve FALSE (0) //
+                    return FALSE; 
             }
             else 
-                return FALSE; // se não devolve FALSE (0) //
+                return FALSE; 
         }
     }
     if(numeros == 3 || letras == 3) // se todos os pares forem compostos por letras ou numeros, devolve FALSE (0) //
         return FALSE;
 
-    return TRUE; // se passar os testes devolve TRUE (1) //
+    return TRUE; 
 }
 
 
@@ -57,8 +57,8 @@ int mesma_matricula(Matricula matricula1, Matricula matricula2) {
     if(!strcmp(matricula1.par1, matricula2.par1) && // verifica se os pares das matriculas são iguais //
         !strcmp(matricula1.par2, matricula2.par2) &&
         !strcmp(matricula1.par3, matricula2.par3))
-        return TRUE; // se forem iguais, devolve TRUE (1) //
-    return FALSE; // se não forem iguais, devolve FALSE (0) //
+        return TRUE; 
+    return FALSE; 
 }
 
 
@@ -69,15 +69,15 @@ int mesma_matricula(Matricula matricula1, Matricula matricula2) {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 int verifica_carro_dentro_1parque(Matricula matricula1, Parque * parque) {
     node * vetor_node;
-    vetor_node = parque->carros_dentro; // é a cabeça para a lista de carros //
+    vetor_node = parque->carros_dentro;
 
     while(vetor_node != NULL) { // enquanto a cabeça não for nula //
         if(mesma_matricula(matricula1, vetor_node->carro->matricula) && vetor_node->carro->dentro == IN)
             // verifica se os pares das duas matriculas são iguais, para cada carro no parque //
                 return TRUE; // se alguma for, devolve TRUE (1) //
-        vetor_node = vetor_node->next; // Se a atual não for, segue para a seguinte //
+        vetor_node = vetor_node->next;
     }
-    return FALSE; // Se nenhuma for, devolve FALSE (0) //
+    return FALSE; 
 }
 
 
@@ -104,14 +104,14 @@ int verifica_carro_parques(Matricula matricula1, Parque ** vetor_parques) {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 void entrada(Matricula matricula, Data data, Horas hora, Parque * parque, Hash_list * hashtable) {
     Carro * carro;
-    carro = (Carro*) malloc(sizeof(Carro)); // aloca memoria para um carro //
+    carro = (Carro*) malloc(sizeof(Carro));
 
     carro->D_entrada.dia = data.dia; // põe os valores de data e hora na estrutura carro //
     carro->D_entrada.mes = data.mes;
     carro->D_entrada.ano = data.ano;
     carro->H_entrada.hora = hora.hora;
     carro->H_entrada.minuto = hora.minuto;
-    carro->preco = 0; // quer dizer que o carro está dentro de um parque //p
+    carro->preco = 0; 
     carro->dentro = IN; // quer dizer que o carro está dentro de um parque //
     // copia os valores da matricula para a estrutura carro //
     strcpy(carro->matricula.par1, matricula.par1); 
@@ -142,7 +142,7 @@ void saida(Carro * carro, Data data, Horas hora, Parque * parque) {
     carro->H_saida.minuto = hora.minuto;
     carro->preco = preco_total(carro->D_entrada, carro->H_entrada, carro->D_saida, carro->H_saida, parque); 
     // calcula o preço total a pagar //
-    carro->dentro = OUT; // quer dizer que o carro está fora do parque //
+    carro->dentro = OUT; 
 
     parque->carros_fora = put(parque->carros_fora, carro); 
     // adiciona o carro ao final lista de carros fora do parque //
@@ -163,11 +163,11 @@ void e(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
     Parque * parque = vec_parque(parques, palavras[1]); // procura o parque no vetor de parques //
 
     if (parque == NULL){  // se o parque não existir //
-        printf("%s: no such parking.\n", palavras[1]); // imprime uma mensagem de erro //
+        printf("%s: no such parking.\n", palavras[1]); 
         return;
     }
     if (parque->lugares_disponiveis == 0) { // se o parque estiver cheio //
-        printf("%s: parking is full.\n", palavras[1]); // imprime uma mensagem de erro //
+        printf("%s: parking is full.\n", palavras[1]); 
         return;
     }
     // guarda a matricula //
@@ -177,7 +177,6 @@ void e(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
     matricula.par3[2] = '\0';
     if (verifica_matriculas(matricula) == FALSE) { // se a matricula for inválida //
         printf("%s-%s-%s: invalid licence plate.\n", matricula.par1, matricula.par2, matricula.par3);
-        // imprime uma mensagem de erro //
         return;
     }
     // guarda a data e a hora //
@@ -186,13 +185,12 @@ void e(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
     if (verifica_datas(data) == FALSE || verifica_horas(hora) == FALSE ||
         compara_datas(*data_actual, *hora_actual, data, hora) == FALSE) {
         // se a data ou a hora forem inválidas ou se a data e a hora forem anteriores à data e hora atuais //
-        printf("invalid date.\n"); // imprime uma mensagem de erro //
+        printf("invalid date.\n");
         return;
     }
 
     if(hash_carro_dentro(hashtable, matricula) == TRUE){ // se o carro já estiver dentro de algum parque //
         printf("%s-%s-%s: invalid vehicle entry.\n", matricula.par1, matricula.par2, matricula.par3);
-        // imprime uma mensagem de erro //
         return;
     }
 
@@ -220,7 +218,7 @@ void s(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
     Carro * carro;
 
     if (parque == NULL){ // se o parque não existir //
-        printf("%s: no such parking.\n", palavras[1]); // imprime uma mensagem de erro //
+        printf("%s: no such parking.\n", palavras[1]); 
         return;
     }
     // guarda a matricula //
@@ -230,7 +228,6 @@ void s(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
     matricula.par3[2] = '\0';
     if (verifica_matriculas(matricula) == FALSE) { // se a matricula for inválida //
         printf("%s-%s-%s: invalid licence plate.\n", matricula.par1, matricula.par2, matricula.par3);
-        // imprime uma mensagem de erro //
         return;
     }
     // guarda a data e a hora //
@@ -239,14 +236,13 @@ void s(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
     if (verifica_datas(data) == FALSE || verifica_horas(hora) == FALSE || 
         compara_datas(*data_actual, *hora_actual, data, hora) == FALSE) {
         // se a data ou a hora forem inválidas ou se a data e a hora forem anteriores à data e hora atuais //
-        printf("invalid date.\n"); // imprime uma mensagem de erro //
+        printf("invalid date.\n"); 
         return;
     }
 
     carro = hash_procura_carro_1parque(hashtable, matricula, parque); // procura o carro no parque //
     if(carro == NULL){ // se o carro não estiver no parque //
         printf("%s-%s-%s: invalid vehicle exit.\n", matricula.par1, matricula.par2, matricula.par3);
-        // imprime uma mensagem de erro //
         return;
     }
 

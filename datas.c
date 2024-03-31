@@ -175,7 +175,7 @@ int diferenca_datas(Data data1, Data data2) {
 float preco(int dias, int minutos, float menos1h, float mais1h, float maxdia) {
     float preco = 0;
 
-    if(minutos >= 60) { // se os minutos forem mais de 60 //
+    if(minutos >= 60) {
         minutos -= 60;
         preco += (4*menos1h); // adiciona-se o preço da primeira hora //
         if((minutos % 15) == 0) // se os minutos forem divisíveis por 15 //
@@ -236,14 +236,14 @@ float preco_total(Data data1, Horas hora1, Data data2, Horas hora2, Parque * par
 // não devolve nada //
 // ~~~~~~~~~~~~~~~~~~~~~~~~//
 void print_so_hora(Horas hora) {
-    if(hora.hora < 10) // se a hora for menor que 10 //
-        printf("0%d:", hora.hora); // imprime a hora com um 0 à frente //
+    if(hora.hora < 10)
+        printf("0%d:", hora.hora); // imprime a hora com um 0 à frente se for menor que 10 //
     else
-        printf("%d:", hora.hora); // se não, imprime a hora normalmente //
-    if(hora.minuto < 10) // se o minuto for menor que 10 //
-        printf("0%d", hora.minuto); // imprime o minuto com um 0 à frente //
+        printf("%d:", hora.hora); 
+    if(hora.minuto < 10)
+        printf("0%d", hora.minuto); 
     else
-        printf("%d", hora.minuto); // se não, imprime o minuto normalmente //
+        printf("%d", hora.minuto); 
 }
 
 
@@ -253,15 +253,15 @@ void print_so_hora(Horas hora) {
 // não devolve nada //
 // ~~~~~~~~~~~~~~~~~~~~~~~~//
 void print_so_data(Data data) {
-    if(data.dia < 10) // se o dia for menor que 10 //
-        printf("0%d-", data.dia); // imprime o dia com um 0 à frente //
+    if(data.dia < 10) // se o dia e mês forem menores que 10, imprime com um 0 à frente //
+        printf("0%d-", data.dia); 
     else
-        printf("%d-", data.dia); // se não, imprime o dia normalmente //
-    if(data.mes < 10) // se o mês for menor que 10 //
-        printf("0%d-", data.mes); // imprime o mês com um 0 à frente //
+        printf("%d-", data.dia); 
+    if(data.mes < 10) 
+        printf("0%d-", data.mes); 
     else
-        printf("%d-", data.mes); // se não, imprime o mês normalmente //
-    printf("%d", data.ano); // imprime o ano //
+        printf("%d-", data.mes);
+    printf("%d", data.ano); 
 }
 
 
@@ -272,6 +272,6 @@ void print_so_data(Data data) {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 void print_data_hora(Data data, Horas hora) {
     print_so_data(data); // imprime a data //
-    printf(" "); // imprime um espaço //
+    printf(" ");
     print_so_hora(hora); // imprime a hora //
 }
