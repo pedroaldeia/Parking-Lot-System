@@ -6,17 +6,17 @@
 
 #define BUFSIZ 8192
 
-
-int splitlinha(char *linha, char ***palavras) { // divide a linha em palavras //
+// divide a linha em palavras //
+//recebe a linha e um array de strings //
+// devolve as palavras da linha num array de strings //
+int splitlinha(char *linha, char ***palavras) { 
     int c = 0, tamanho;
     char ** lista_p = malloc(BUFSIZ * sizeof(char*));
-    
-    // Initcializa os ponteiros de inicio e fim da linha
+    // Inicializa os ponteiros de inicio e fim da linha
     char *inicio = linha;
     char *fim = linha;
     char emAspas = 0;
 
-    
     while (*fim != '\0') { // Percorre a linha até ao fim
         if (*fim == '"') { // Se encontrar aspas, inverte o estado da variável emAspas
             emAspas = !emAspas;
@@ -39,7 +39,6 @@ int splitlinha(char *linha, char ***palavras) { // divide a linha em palavras //
         }
         fim++; // passa para o próximo caracter //
     }
-
     // Processa a última palavra
     int length = fim - inicio; // calcula o tamanho da última palavra //
     if (length > 0) { // se o tamanho for maior que 0 //
@@ -55,12 +54,14 @@ int splitlinha(char *linha, char ***palavras) { // divide a linha em palavras //
         c++;
     }
     lista_p[c] = NULL; // Adiciona NULL no fim do array de palavras //
-
     *palavras = realloc(lista_p, c * sizeof(char*)); // realoca o array para o tamanho certo //
 
     return c;
 }
 
+// Lê a linha de input //
+// Não recebe argumentos //
+// Devolve a linha lida //
 char * lineinput() {
     char  * linha = (char *) malloc(sizeof(char)* BUFSIZ);
     int i = 0;
@@ -72,6 +73,9 @@ char * lineinput() {
     return linha;
 }
 
+// Liberta a memória alocada para as palavras //
+// Recebe um array de strings e o número de palavras //
+// Não devolve nada //
 void free_input(char ** palavras, int n_args) {
     int i;
 
@@ -81,9 +85,12 @@ void free_input(char ** palavras, int n_args) {
     free(palavras);
 }
 
-int conta_palavras(char ** linha) {
+// Conta o número de palavras numa linha //
+// Recebe um array de strings //
+// Devolve o número de palavras //
+int conta_palavras(char ** palavras) {
     int i = 0;
-    while(linha[i] != NULL) {
+    while(palavras[i] != NULL) {
         i++;
     }
     return i;

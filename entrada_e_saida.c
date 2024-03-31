@@ -175,15 +175,12 @@ void e(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
         printf("%s: no such parking.\n", palavras[1]);
         return;
     }
-        
-    
     if (parque->lugares_disponiveis == 0) {
         printf("%s: parking is full.\n", palavras[1]);
         return;
     }
         
     sscanf(palavras[2], "%s-%s-%s", matricula.par1, matricula.par2, matricula.par3);
-
     matricula.par1[2] = '\0';
     matricula.par2[2] = '\0';
     matricula.par3[2] = '\0';
@@ -195,7 +192,6 @@ void e(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
 
     sscanf(palavras[3], "%d-%d-%d", &data.dia, &data.mes, &data.ano);
     sscanf(palavras[4], "%d:%d", &hora.hora, &hora.minuto);
-
     if (verifica_datas(data) == FALSE || verifica_horas(hora) == FALSE ||
         compara_datas(*data_actual, *hora_actual, data, hora) == FALSE) {
         printf("invalid date.\n");
@@ -208,7 +204,6 @@ void e(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
     }
 
     entrada(matricula, data, hora, parque, hashtable);
-
     data_actual->dia = data.dia;
     data_actual->mes = data.mes;
     data_actual->ano = data.ano;
@@ -231,11 +226,9 @@ void s(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
     }
 
     sscanf(palavras[2], "%s-%s-%s", matricula.par1, matricula.par2, matricula.par3);
-
     matricula.par1[2] = '\0';
     matricula.par2[2] = '\0';
     matricula.par3[2] = '\0';
-
     if (verifica_matriculas(matricula) == FALSE) {
         printf("%s-%s-%s: invalid licence plate.\n", matricula.par1, matricula.par2, matricula.par3);
         return;
@@ -243,7 +236,6 @@ void s(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
 
     sscanf(palavras[3], "%d-%d-%d", &data.dia, &data.mes, &data.ano);
     sscanf(palavras[4], "%d:%d", &hora.hora, &hora.minuto);
-
     if (verifica_datas(data) == FALSE || verifica_horas(hora) == FALSE ||
         compara_datas(*data_actual, *hora_actual, data, hora) == FALSE) {
         printf("invalid date.\n");
@@ -251,14 +243,12 @@ void s(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
     }
 
     carro = hash_procura_carro_1parque(hashtable, matricula, parque);
-
     if(carro == NULL){
         printf("%s-%s-%s: invalid vehicle exit.\n", matricula.par1, matricula.par2, matricula.par3);
         return;
     }
 
     saida(carro, data, hora, parque);
-
     data_actual->dia = data.dia;
     data_actual->mes = data.mes;
     data_actual->ano = data.ano;
