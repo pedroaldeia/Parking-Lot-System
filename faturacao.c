@@ -100,6 +100,8 @@ void faturacao(Parque * parque) { // imprime a faturação do parque //
     node * head_carros = parque->head_cf; // aponta para a cabeça da lista de carros //
     List_preco * lista_precos = devolve_preco_dias(head_carros); // aponta para a cabeça da lista de preços //
     print_precos(lista_precos); // imprime a faturação por dia //
+    free_precos(lista_precos); // liberta a memória dos nodes da lista de preços //
+    free(lista_precos); // liberta a memória alocada para a lista de preços //
 }
 
 void print_fatcarro(node * head_carros, Data data) { // imprime a faturação de um parque num determinado dia //

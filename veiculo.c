@@ -22,37 +22,40 @@ Matricula cria_matricula(char * matricula) { // cria uma matricula a partir de u
     return mat; // devolve a matricula //
 }
 
-void sort_entradas_by_park_name(Hash_node **entradas, int tamanho) {
+void sort_entradas_nome(Hash_node **entradas, int tamanho) { // ordena as entradas por nome do parque //
     int i, j;
     Hash_node *key;
 
-    for (i = 1; i < tamanho; i++) {
-        key = entradas[i];
-        j = i - 1;
+    for (i = 1; i < tamanho; i++) { // para cada entrada //
+        key = entradas[i]; // guarda a entrada //
+        j = i - 1; // guarda o índice anterior //
 
-        while (j >= 0 && strcmp(entradas[j]->parque->nome, key->parque->nome) > 0) {
-            entradas[j + 1] = entradas[j];
-            j = j - 1;
+        while (j >= 0 && strcmp(entradas[j]->parque->nome, key->parque->nome) > 0) { // enquanto o nome do parque for maior //
+            entradas[j + 1] = entradas[j]; // troca as entradas //
+            j = j - 1; // passa para a entrada anterior //
         }
-        entradas[j + 1] = key;
+        entradas[j + 1] = key; // coloca a entrada na posição correta //
     }
 }
 
-void sort_entradas_by_park_name_and_date(Hash_node **entradas, int tamanho) {
-    sort_entradas_by_park_name(entradas, tamanho); // Sort by park name
+void sort_entradas_nome_data(Hash_node **entradas, int tamanho) {
+    sort_entradas_nome(entradas, tamanho); // ordena as entradas por nome do parque //
 
     int i, j;
     Hash_node *key;
 
-    for (i = 1; i < tamanho; i++) {
-        key = entradas[i];
-        j = i - 1;
+    for (i = 1; i < tamanho; i++) { // para cada entrada //
+        key = entradas[i]; // guarda a entrada //
+        j = i - 1; // guarda o índice anterior //
 
-        while (j >= 0 && strcmp(entradas[j]->parque->nome, key->parque->nome) == 0 && compara_datas(entradas[j]->carro->D_entrada, entradas[j]->carro->H_entrada, key->carro->D_entrada, key->carro->H_entrada) == FALSE) {
-            entradas[j + 1] = entradas[j];
-            j = j - 1;
+        while (j >= 0 && strcmp(entradas[j]->parque->nome, key->parque->nome) == 0 
+            && compara_datas(entradas[j]->carro->D_entrada, entradas[j]->carro->H_entrada, 
+            key->carro->D_entrada, key->carro->H_entrada) == FALSE) {
+            // enquanto o nome do parque for igual e a data de entrada for menor //
+            entradas[j + 1] = entradas[j]; // troca as entradas //
+            j = j - 1; // passa para a entrada anterior //
         }
-        entradas[j + 1] = key;
+        entradas[j + 1] = key; // coloca a entrada na posição correta //
     }
 }
 
@@ -79,7 +82,7 @@ Hash_node ** busca_entradas(Hash_list * hashtable, Matricula matricula) { // pro
     entradas = (Hash_node**) realloc(entradas, sizeof(Hash_node) * i); 
     // realoca o espaço para o array de nodes (para o espaço total utilizado pelo array) //
     entradas[i] = NULL; // coloca um NULL no fim do array //
-    sort_entradas_by_park_name_and_date(entradas, i); // organiza o array de nodes //
+    sort_entradas_nome_data(entradas, i); // organiza o array de nodes //
 
     return entradas; // devolve o array de nodes //
 }
