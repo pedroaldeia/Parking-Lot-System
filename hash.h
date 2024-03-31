@@ -2,7 +2,7 @@
 
 #include "headers.h"
 
-#define HASHSIZE 907
+#define HASHSIZE 61
 
 #ifndef HASH
 typedef struct hash_node {
