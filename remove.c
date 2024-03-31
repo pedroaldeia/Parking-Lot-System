@@ -45,23 +45,7 @@ void removelista_dentro_e_fora(Parque * parque) {
     }
     
 }
-/*
-void remove_entradas_hash(Hash_list * hashtable, Parque * parque){
-    Hash_node * head;
-    for (int i = 0; i < HASHSIZE; i++) {
-        if (hashtable[i].head != NULL) {
-            head = hashtable[i].head;
-            for(; head != NULL; head = head->next) {
-                if(head->next->parque == parque) 
-                    hash_removenode(head);
-            }
-        }
-        if (hashtable[i].head != NULL && hashtable[i].head->parque == parque) {
-            free(hashtable[i].head);
-        }
-    }
-}
-*/
+
 
 void remove_entradas_hash(Hash_list * hashtable, Parque * parque){
     for (int i = 0; i < HASHSIZE; i++) {

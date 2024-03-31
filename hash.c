@@ -127,8 +127,11 @@ void put_hashtable(Hash_list * hashtable, Carro * carro, Parque * parque) {
     hashtable[index].size++; // aumenta o tamanho da lista na hashtable //
 }
 
-
-// Procura o
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Procura o carro com a matricula dada dentro de um parque //
+// Recebe um ponteiro para a hashtable e uma matricula //
+// Devolve um ponteiro para o carro encontrado (Carro *) //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 Carro * hash_procura_carro_dentro(Hash_list * hashtable, Matricula matricula) { 
     // procura um carro dentro da hashtable // 
     int index = hash_index(matricula); // vai buscar o índice da matricula //
@@ -143,6 +146,12 @@ Carro * hash_procura_carro_dentro(Hash_list * hashtable, Matricula matricula) {
     return NULL; // se não encontrar devolve null //
 }
 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Verifica se um carro está dentro de algum parque //
+// Recebe um ponteiro para a hashtable e uma matricula //
+// Devolve TRUE se o carro estiver dentro, FALSE se não estiver //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 int hash_carro_dentro(Hash_list * hashtable, Matricula matricula){ 
     // verifica se um carro está dentro da hashtable //
     if (hash_procura_carro_dentro(hashtable, matricula) != NULL) // se o carro estiver dentro //
@@ -150,6 +159,12 @@ int hash_carro_dentro(Hash_list * hashtable, Matricula matricula){
     return FALSE; // se não devolve false //
 }
 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Procura um carro com a matricula dada num parque específico //
+// Recebe um ponteiro para a hashtable, uma matricula e um parque //
+// Devolve um ponteiro para o carro encontrado (Carro *) //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 Carro * hash_procura_carro_1parque(Hash_list * hashtable, Matricula matricula, Parque * parque){
     // procura um carro num parque //
     int index = hash_index(matricula); // vai buscar o índice da matricula //
@@ -166,6 +181,12 @@ Carro * hash_procura_carro_1parque(Hash_list * hashtable, Matricula matricula, P
     return NULL; // se não encontrar devolve null //
 }
 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Cria uma hashtable //
+// Não recebe nada //
+// Devolve um ponteiro para a hashtable (Hash_list *) //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 Hash_list * cria_hash() { 
     Hash_list * hashtable = (Hash_list*) malloc(sizeof(Hash_list) * HASHSIZE); 
     // aloca espaço para a hashtable //

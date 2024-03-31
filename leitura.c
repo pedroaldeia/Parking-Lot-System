@@ -4,11 +4,12 @@
 
 #include "leitura.h"
 
-#define BUFSIZ 8192
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // divide a linha em palavras //
 //recebe a linha e um array de strings //
 // devolve as palavras da linha num array de strings //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 int splitlinha(char *linha, char ***palavras) { 
     int c = 0, tamanho;
     char ** lista_p = malloc(BUFSIZ * sizeof(char*));
@@ -59,9 +60,12 @@ int splitlinha(char *linha, char ***palavras) {
     return c;
 }
 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // Lê a linha de input //
 // Não recebe argumentos //
 // Devolve a linha lida //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~//
 char * lineinput() {
     char  * linha = (char *) malloc(sizeof(char)* BUFSIZ);
     int i = 0;
@@ -73,9 +77,12 @@ char * lineinput() {
     return linha;
 }
 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // Liberta a memória alocada para as palavras //
 // Recebe um array de strings e o número de palavras //
 // Não devolve nada //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 void free_input(char ** palavras, int n_args) {
     int i;
 
@@ -85,9 +92,12 @@ void free_input(char ** palavras, int n_args) {
     free(palavras);
 }
 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // Conta o número de palavras numa linha //
 // Recebe um array de strings //
 // Devolve o número de palavras //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 int conta_palavras(char ** palavras) {
     int i = 0;
     while(palavras[i] != NULL) {
@@ -96,7 +106,12 @@ int conta_palavras(char ** palavras) {
     return i;
 }
 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // Divide a linha em palavras
+// Recebe a linha
+// Devolve um array de strings com as palavras da linha (char **) //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 char ** wordArray(char *linha) {
     char **words;
 
