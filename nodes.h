@@ -16,7 +16,7 @@ node* push(node* head, Carro * newcarro);
 
 // Adiciona um nó no final da lista //
 node * put(node * tail, Carro *newcarro);
- 
+
 // Destroi uma lista //
 node* destroy(node* head);
 
