@@ -190,6 +190,6 @@ Hash_list * cria_hash() {
         hashtable[i].head = NULL; // inicializa os componentes da lista a NULL e 0 //
         hashtable[i].tail = NULL;
         hashtable[i].size = 0;
-    }
+    } 
     return hashtable; 
 }
