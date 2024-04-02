@@ -151,6 +151,34 @@ void saida(Carro * carro, Data data, Horas hora, Parque * parque) {
     parque->lugares_disponiveis += 1; // adiciona um lugar disponível ao parque //
 }
 
+
+int verifica_e(Hash_list * hashtable, Data * data_actual, Horas * hora_actual, Parque * parque, Matricula matricula, Data data, Horas hora){
+    if (parque->lugares_disponiveis == 0) { // se o parque estiver cheio //
+        printf("%s: parking is full.\n", parque->nome); 
+        return FALSE;
+    }
+    
+    if (verifica_matriculas(matricula) == FALSE) { // se a matricula for inválida //
+        printf("%s-%s-%s: invalid licence plate.\n", matricula.par1, matricula.par2, matricula.par3);
+        return FALSE;
+    }
+    
+    if (verifica_datas(data) == FALSE || verifica_horas(hora) == FALSE ||
+        compara_datas(*data_actual, *hora_actual, data, hora) == FALSE) {
+        // se a data ou a hora forem inválidas ou se a data e a hora forem anteriores à data e hora atuais //
+        printf("invalid date.\n");
+        return FALSE;
+    }
+
+    if(hash_carro_dentro(hashtable, matricula) == TRUE){ // se o carro já estiver dentro de algum parque //
+        printf("%s-%s-%s: invalid vehicle entry.\n", matricula.par1, matricula.par2, matricula.par3);
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // Verifica se os argumentos são válidos e dá entrada a um carro num parque //
 // Recebe um vetor de parques, a hora atual, a data atual, um vetor de palavras e uma hashtable //
@@ -162,37 +190,21 @@ void e(Parque ** parques, Horas * hora_actual, Data * data_actual, char ** palav
     Matricula matricula;
     Parque * parque = vec_parque(parques, palavras[1]); // procura o parque no vetor de parques //
 
+    sscanf(palavras[2], "%s-%s-%s", matricula.par1, matricula.par2, matricula.par3);
+    matricula.par1[2] = '\0'; // guarda a matricula //
+    matricula.par2[2] = '\0';
+    matricula.par3[2] = '\0';
+
+    sscanf(palavras[3], "%d-%d-%d", &data.dia, &data.mes, &data.ano); // guarda a data e a hora //
+    sscanf(palavras[4], "%d:%d", &hora.hora, &hora.minuto);
+
     if (parque == NULL){  // se o parque não existir //
         printf("%s: no such parking.\n", palavras[1]); 
         return;
     }
-    if (parque->lugares_disponiveis == 0) { // se o parque estiver cheio //
-        printf("%s: parking is full.\n", palavras[1]); 
-        return;
-    }
-    // guarda a matricula //
-    sscanf(palavras[2], "%s-%s-%s", matricula.par1, matricula.par2, matricula.par3);
-    matricula.par1[2] = '\0';
-    matricula.par2[2] = '\0';
-    matricula.par3[2] = '\0';
-    if (verifica_matriculas(matricula) == FALSE) { // se a matricula for inválida //
-        printf("%s-%s-%s: invalid licence plate.\n", matricula.par1, matricula.par2, matricula.par3);
-        return;
-    }
-    // guarda a data e a hora //
-    sscanf(palavras[3], "%d-%d-%d", &data.dia, &data.mes, &data.ano); 
-    sscanf(palavras[4], "%d:%d", &hora.hora, &hora.minuto);
-    if (verifica_datas(data) == FALSE || verifica_horas(hora) == FALSE ||
-        compara_datas(*data_actual, *hora_actual, data, hora) == FALSE) {
-        // se a data ou a hora forem inválidas ou se a data e a hora forem anteriores à data e hora atuais //
-        printf("invalid date.\n");
-        return;
-    }
 
-    if(hash_carro_dentro(hashtable, matricula) == TRUE){ // se o carro já estiver dentro de algum parque //
-        printf("%s-%s-%s: invalid vehicle entry.\n", matricula.par1, matricula.par2, matricula.par3);
-        return;
-    }
+    if (verifica_e(hashtable, data_actual, hora_actual, parque, matricula, data, hora) == FALSE) 
+        return; // verifica se os argumentos são válidos //
 
     entrada(matricula, data, hora, parque, hashtable); // dá entrada ao carro //
     data_actual->dia = data.dia; // atualiza a data e a hora atuais //
