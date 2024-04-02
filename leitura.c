@@ -55,7 +55,7 @@ int splitlinha(char *linha, char ***palavras) {
         c++;
     }
     lista_p[c] = NULL; // Adiciona NULL no fim do array de palavras //
-    *palavras = realloc(lista_p, c * sizeof(char*)); // realoca o array para o tamanho certo //
+    *palavras = realloc(lista_p, (c+1) * sizeof(char*)); // realoca o array para o tamanho certo //
 
     return c;
 }
