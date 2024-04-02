@@ -159,7 +159,7 @@ void saida(Carro * carro, Data data, Horas hora, Parque * parque) {
 int verifica_e(Hash_list * hashtable, Data * data_actual, Horas * hora_actual, Parque * parque, Matricula matricula, Data data, Horas hora){
     if (parque->lugares_disponiveis == 0) { // se o parque estiver cheio //
         printf("%s: parking is full.\n", parque->nome); 
-        return FALSE;
+        return FALSE; 
     }
     
     if (verifica_matriculas(matricula) == FALSE) { // se a matricula for inválida //
