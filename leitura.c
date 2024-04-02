@@ -86,7 +86,7 @@ char * lineinput() {
 void free_input(char ** palavras, int n_args) {
     int i;
 
-    for(i = 0; i <= n_args; i++) {
+    for(i = 0; i < n_args; i++) {
         free(palavras[i]);
     }
     free(palavras);

@@ -151,7 +151,11 @@ void saida(Carro * carro, Data data, Horas hora, Parque * parque) {
     parque->lugares_disponiveis += 1; // adiciona um lugar disponível ao parque //
 }
 
-
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+// Verifica se os argumentos são válidos para a entrada de um carro num parque //
+// Recebe uma hashtable, a data atual, a hora atual, um parque, uma matricula, uma data e uma hora //
+// Devolve TRUE (1) se forem válidos e FALSE (0) se não forem //
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 int verifica_e(Hash_list * hashtable, Data * data_actual, Horas * hora_actual, Parque * parque, Matricula matricula, Data data, Horas hora){
     if (parque->lugares_disponiveis == 0) { // se o parque estiver cheio //
         printf("%s: parking is full.\n", parque->nome); 
