@@ -1,3 +1,5 @@
+# Parking Lot System
+
 [Scope of Work](https://github.com/pedroaldeia/Parking-Lot-System/blob/master/enunciado.md) | [Guidelines](https://github.com/pedroaldeia/Parking-Lot-System/blob/master/guidelines.md) | [Debugging](https://github.com/pedroaldeia/Parking-Lot-System/blob/master/debugging.md)
 
 Parking Lot system implementation in C
